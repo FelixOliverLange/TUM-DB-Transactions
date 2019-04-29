@@ -25,7 +25,7 @@ bool isHistoryConflict(Operation op1, Operation op2){
     return isConflict;
 }
 
-bool cycleFromPositionOn(bool *graphMatrix, int dimension, int start, vector<int> visitedTransactions){
+bool cycleFromPositionOn(vector<vector<bool>>  &graphMatrix, int dimension, int start, vector<int> visitedTransactions){
     bool isCycle = false;
 
     //outer loop, defining starting point
@@ -38,7 +38,7 @@ bool cycleFromPositionOn(bool *graphMatrix, int dimension, int start, vector<int
         for(int j = 0; j < dimension; j++){
 
             //check rather they are connected
-            if(graphMatrix[i*dimension + j]){
+            if(graphMatrix[i][j]){
 
                 //connection existent, does it lead to a cycle? (early stopping)
                 if(find(visitedTransactions.begin(), visitedTransactions.end(), j) != visitedTransactions.end()) {
@@ -89,20 +89,21 @@ int main(){
             highestTransactionNumber = op.transaction;
         }
     }
-    bool graphMatrix[highestTransactionNumber][highestTransactionNumber];
+    //bool graphMatrix[highestTransactionNumber][highestTransactionNumber];
+    vector<vector<bool>> graphMatrix(highestTransactionNumber, vector<bool>(highestTransactionNumber));
 
     //fill matrix
     for(int i = 0; i < operationVector.size() - 1; i++){
         for(int j = i+1; j < operationVector.size(); j++){
             if(isHistoryConflict(operationVector[i], operationVector[j])){
-                graphMatrix[highestTransactionNumber][highestTransactionNumber] = true;
+                graphMatrix[operationVector[i].transaction-1][operationVector[j].transaction-1] = true; //-1, as start at 1
             };
         }
     }
 
     //detect cycles
     vector<int> visitedTransactions;
-    bool cylcePresent = cycleFromPositionOn((bool *)graphMatrix, highestTransactionNumber, 0, visitedTransactions);
+    bool cylcePresent = cycleFromPositionOn(graphMatrix, highestTransactionNumber, 0, visitedTransactions);
 
     //if a cycle is present, we are not serializable -> invert output
     bool serializable = !cylcePresent;
@@ -113,8 +114,9 @@ int main(){
     cout << serializable <<endl;
 
     //wipe data
-    memset(graphMatrix, false, sizeof(graphMatrix));
-    highestTransactionNumber = 0;
+    //memset(graphMatrix, false, sizeof(graphMatrix));
+    //highestTransactionNumber = 0;
+
 
 }
 
