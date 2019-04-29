@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/d064500/CLionProjects/DB-Transactions/main.cpp
+iostream
+-
+string
+-
+vector
+-
+sstream
+-
+algorithm
+-
+

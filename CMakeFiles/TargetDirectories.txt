@@ -1,0 +1,3 @@
+/Users/d064500/CLionProjects/DB-Transactions/CMakeFiles/rebuild_cache.dir
+/Users/d064500/CLionProjects/DB-Transactions/CMakeFiles/edit_cache.dir
+/Users/d064500/CLionProjects/DB-Transactions/CMakeFiles/DB_Transactions.dir
